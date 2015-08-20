@@ -11,23 +11,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
-   /* @Autowired
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
       auth
         .inMemoryAuthentication()
           .withUser("raghu").password("raman").roles("USER");
-    }*/
+    }
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable(); //support non-browser
-        //http.authorizeRequests()
-        //.antMatchers("/data/**").access("hasRole('ROLE_USER')").anyRequest().authenticated().and().httpBasic();
         http.authorizeRequests()
-        .antMatchers("/data/**").permitAll()
-        .and()
-           .exceptionHandling().accessDeniedPage("/403");
+        .antMatchers("/data/**").access("hasRole('ROLE_USER')").anyRequest().authenticated().and().httpBasic();
     }
 
 }
